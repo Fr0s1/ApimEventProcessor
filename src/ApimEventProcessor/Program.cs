@@ -39,7 +39,9 @@ namespace ApimEventProcessor
             logger.LogInfo("Registering EventProcessor...");
             var httpMessageProcessor = new MoesifHttpMessageProcessor(logger);
             eventProcessorHost.RegisterEventProcessorFactoryAsync(
-                new ApimHttpEventProcessorFactory(httpMessageProcessor, logger));
+                new ApimHttpEventProcessorFactory(httpMessageProcessor, logger),
+                buildEventProcessorOptions()
+            );
             
             logger.LogInfo("Process is running. Press enter key to end...");
             Console.ReadLine();
