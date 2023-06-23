@@ -72,5 +72,22 @@ namespace ApimEventProcessor
             var logger = new ConsoleLogger(logLevel);
             return logger;
         }
+
+        public static EventProcessorOptions buildEventProcessorOptions()
+        {
+            var infoLogger = new ConsoleLogger(LogLevel.Info);
+            EventProcessorOptions epOptions = new EventProcessorOptions();
+            int maxSizeFromConfig = ParamConfig.loadWithDefault(
+                AzureAppParamNames.EVENTHUB_MAX_BATCH_SIZE,
+                RunParams.EVENTHUB_MAX_BATCH_SIZE_DEFAULT);
+            var oldMaxBatchSize = epOptions.MaxBatchSize;
+            if (maxSizeFromConfig > RunParams.EVENTHUB_MAX_BATCH_SIZE_DEFAULT) {
+                epOptions.MaxBatchSize = maxSizeFromConfig;
+                infoLogger.LogInfo($"Overriding the default Eventhub MaxBatchSize. Old default value:[{oldMaxBatchSize}] New value:[{epOptions.MaxBatchSize}]");
+            } else {
+                infoLogger.LogInfo($"Using default Eventhub MaxBatchSize:[{epOptions.MaxBatchSize}] (to override set env var {AzureAppParamNames.EVENTHUB_MAX_BATCH_SIZE})");
+            }
+            return epOptions;
+        }
     }
 }
