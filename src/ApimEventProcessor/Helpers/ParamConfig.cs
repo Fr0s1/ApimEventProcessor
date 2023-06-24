@@ -53,7 +53,7 @@ namespace ApimEventProcessor.Helpers
     public static class RunParams
     {
         // Frequency at which events are checkpointed to Azure Storage.
-        public const int CHECKPOINT_MINIMUM_INTERVAL_MINUTES = 5;
+        public const int CHECKPOINT_MINIMUM_INTERVAL_MINUTES = 1;
         
         // Frequency at which Moesif configuration is fetched.
         public const int CONFIG_FETCH_INTERVAL_MINUTES = 5;
