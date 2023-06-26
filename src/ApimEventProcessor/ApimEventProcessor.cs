@@ -52,7 +52,7 @@ namespace ApimEventProcessor
 
         async Task IEventProcessor.ProcessEventsAsync(PartitionContext context, IEnumerable<EventData> messages)
         {
-            _Logger.LogDebug("Begin: ProcessEventsAsync");
+            _Logger.LogDebug($"Begin: ProcessEventsAsync. PartitionId: {context.Lease.PartitionId}");
             var processedCount = 0;
             foreach (EventData eventData in messages)
             {
@@ -81,15 +81,12 @@ namespace ApimEventProcessor
             // so that worker can resume processing from that time back if it restarts.
             if (this.checkpointStopWatch.Elapsed > TimeSpan.FromMinutes(RunParams.CHECKPOINT_MINIMUM_INTERVAL_MINUTES))
             {
-                _Logger.LogInfo("Saving checkpoint. Actual: ["
-                                + this.checkpointStopWatch.Elapsed
-                                + "] mins. minimum configured is : ["
-                                + RunParams.CHECKPOINT_MINIMUM_INTERVAL_MINUTES
-                                + "] mins");
+                _Logger.LogInfo($"Saving checkpoint for partition:[{context.Lease.PartitionId}] offset[{context.Lease.Offset}] seq[{context.Lease.SequenceNumber}] owner[{context.Lease.Owner}]. "
+                                + $"Actual elapsed time: [{this.checkpointStopWatch.Elapsed}] mins. minimum configured is : [{RunParams.CHECKPOINT_MINIMUM_INTERVAL_MINUTES}] mins");
                 await context.CheckpointAsync();
                 this.checkpointStopWatch.Restart();
             }
-            _Logger.LogDebug("End: ProcessEventsAsync");
+            _Logger.LogDebug($"End: ProcessEventsAsync. PartitionId: {context.Lease.PartitionId}");
         }
 
         public static string displayableEvent(PartitionContext context, EventData evt)

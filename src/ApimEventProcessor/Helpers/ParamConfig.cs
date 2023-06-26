@@ -58,7 +58,7 @@ namespace ApimEventProcessor.Helpers
         // Frequency at which Moesif configuration is fetched.
         public const int CONFIG_FETCH_INTERVAL_MINUTES = 5;
         
-        public const int EVENTHUB_MAX_BATCH_SIZE_DEFAULT = 0;
+        public const int EVENTHUB_MAX_BATCH_SIZE_DEFAULT = 100;
     }
 
     public static class MoesifApiConfig
