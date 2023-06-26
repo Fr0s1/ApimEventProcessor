@@ -83,7 +83,7 @@ namespace ApimEventProcessor
                 AzureAppParamNames.EVENTHUB_MAX_BATCH_SIZE,
                 RunParams.EVENTHUB_MAX_BATCH_SIZE_DEFAULT);
             var oldMaxBatchSize = epOptions.MaxBatchSize;
-            if (maxSizeFromConfig > RunParams.EVENTHUB_MAX_BATCH_SIZE_DEFAULT) {
+            if (maxSizeFromConfig > 0) {
                 epOptions.MaxBatchSize = maxSizeFromConfig;
                 infoLogger.LogInfo($"Overriding the default Eventhub MaxBatchSize. Old default value:[{oldMaxBatchSize}] New value:[{epOptions.MaxBatchSize}]");
             } else {
