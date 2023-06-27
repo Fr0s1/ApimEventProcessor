@@ -122,8 +122,8 @@ namespace ApimEventProcessor
         public Dictionary<Guid, KeyValuePair<HttpMessage, HttpMessage>> RemoveCompletedMessages(){
             Dictionary<Guid, KeyValuePair<HttpMessage, HttpMessage>> messages = new Dictionary<Guid, KeyValuePair<HttpMessage, HttpMessage>>();
             lock(qLock){
-                var reqCacheSizeBefore = requestsCache.Count;
-                var respCacheSizeBefore = responsesCache.Count;
+                //var reqCacheSizeBefore = requestsCache.Count;
+                //var respCacheSizeBefore = responsesCache.Count;
                 var commonMessageIds = requestsCache.Keys.Intersect(responsesCache.Keys);
                 foreach(Guid messageId in commonMessageIds)
                 {
@@ -133,11 +133,11 @@ namespace ApimEventProcessor
                     if (null != reqm && null != respm)
                         messages.Add(messageId, new KeyValuePair<HttpMessage, HttpMessage>(reqm, respm));
                 }
-                if (commonMessageIds.LongCount() > 0) {
-                    var reqDelta = reqCacheSizeBefore - requestsCache.Count;
-                    var respCache = respCacheSizeBefore - responsesCache.Count;
-                    _Logger.LogInfo($"Before/After CommonMessages:[{messages.Count}|{reqDelta}|{respCache}] RequestsCache: [{reqCacheSizeBefore}/{requestsCache.Count}] ResponsesCache: [{respCacheSizeBefore}/{responsesCache.Count}]");
-                }
+                //if (commonMessageIds.LongCount() > 0) {
+                //    var reqDelta = reqCacheSizeBefore - requestsCache.Count;
+                //    var respCache = respCacheSizeBefore - responsesCache.Count;
+                //    _Logger.LogInfo($"Before/After CommonMessages:[{messages.Count}|{reqDelta}|{respCache}] RequestsCache: [{reqCacheSizeBefore}/{requestsCache.Count}] ResponsesCache: [{respCacheSizeBefore}/{responsesCache.Count}]");
+                //}
             }
             return messages;
         }
