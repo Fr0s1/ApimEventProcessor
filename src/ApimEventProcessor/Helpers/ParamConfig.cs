@@ -39,7 +39,7 @@ namespace ApimEventProcessor.Helpers
 
         // Optional: use default if not set
         // see https://learn.microsoft.com/en-us/dotnet/api/microsoft.servicebus.messaging.eventprocessoroptions?view=azure-dotnet#properties
-        // override the default EventHub MaxBatchSize value (at the moment it defaults to 10)
+        // override the default EventHub MaxBatchSize value
         public const string EVENTHUB_MAX_BATCH_SIZE = "APIMEVENTS-EVENTHUB-MAX-BATCH-SIZE";
     }
 
@@ -58,6 +58,7 @@ namespace ApimEventProcessor.Helpers
         // Frequency at which Moesif configuration is fetched.
         public const int CONFIG_FETCH_INTERVAL_MINUTES = 5;
         
+        // EventHub MaxBatchSize value default is 10, a bit too small.
         public const int EVENTHUB_MAX_BATCH_SIZE_DEFAULT = 100;
     }
 
